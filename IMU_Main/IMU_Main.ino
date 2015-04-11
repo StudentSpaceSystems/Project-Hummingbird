@@ -87,8 +87,8 @@ void setup() {
   
   
   // initialize the kalman state
-    Serial.println("Creating kalman state");
-    state = kalman_init(1, 1, 1, 0);
+  Serial.println("Creating kalman state");
+  state = kalman_init(1, 1, 1, 0);
 }
 
 void loop() {
