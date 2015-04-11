@@ -32,12 +32,29 @@ float t0 = 0;
 struct kalman_state {
   double q; //process noise covariance
   double r; //measurement noise covariance
-  double x; //value
+  double value; //value
   double p; //estimation error covariance
   double k; //kalman gain
 };
 
-struct kalman_state state;
+struct kalman_state AxState;
+struct kalman_state AyState;
+struct kalman_state AzState;
+
+struct kalman_state GxState;
+struct kalman_state GyState;
+struct kalman_state GzState;
+
+struct kalman_state MxState;
+struct kalman_state MyState;
+struct kalman_state MzState;
+
+struct kalman_state altState;
+
+double axq, axr, axp, gxq, gxr, gxp, mxq, mxr, mxp;
+double ayq, ayr, ayp, gyq, gyr, gyp, myq, myr, myp;
+double azq, azr, azp, gzq, gzr, gzp, mzq, mzr, mzp;
+double altq, altr, altp;
 
 struct kalman_state kalman_init(double q, double r, double p, double intial_value)
 {
@@ -45,7 +62,7 @@ struct kalman_state kalman_init(double q, double r, double p, double intial_valu
   result.q = q;
   result.r = r;
   result.p = p;
-  result.x = intial_value;
+  result.value = intial_value;
 
   return result;
 }
@@ -58,7 +75,7 @@ void kalman_update(struct kalman_state* state, double measurement)
 
   //measurement update
   state->k = state->p / (state->p + state->r);
-  state->x = state->x + state->k * (measurement - state->x);
+  state->value = state->value + state->k * (measurement - state->value);
   state->p = (1 - state->k) * state->p;
 }
 
@@ -85,10 +102,38 @@ void setup() {
   Serial.print(baseline);
   Serial.println(" mb");
   
+  // initialize the state values for the various kalman filters
+  axq=ayq=azq=1;
+  axr=ayr=azr=1;
+  axp=ayp=azp=1;
   
-  // initialize the kalman state
-  Serial.println("Creating kalman state");
-  state = kalman_init(1, 1, 1, 0);
+  gxq=gyq=gzq=1;
+  gxr=gyr=gzr=1;
+  gxp=gyp=gzp=1;
+  
+  mxq=myq=mzq=1;
+  mxr=myr=mzr=1;
+  mxp=myp=mzp=1;
+  
+  altq=1;
+  altr=1;
+  altp=1;
+  
+  // initialize the kalman states
+  Serial.println("Creating kalman states");
+  AxState = kalman_init(axq, axr, axp, 0);
+  AyState = kalman_init(ayq, ayr, ayp, 0);
+  AzState = kalman_init(azq, azr, azp, 0);
+  
+  GxState = kalman_init(axq, axr, axp, 0);
+  GyState = kalman_init(ayq, ayr, ayp, 0);
+  GzState = kalman_init(azq, azr, azp, 0);
+  
+  MxState = kalman_init(axq, axr, axp, 0);
+  MyState = kalman_init(ayq, ayr, ayp, 0);
+  MzState = kalman_init(azq, azr, azp, 0);
+  
+  altState = kalman_init(altq, altr, altp, 0);
 }
 
 void loop() {
@@ -99,10 +144,9 @@ void loop() {
   float dt = t - t0;
   t0 = t;
 
-
-  float l = sqrt(pow(Gx,2)+pow(Gy,2)+pow(Gz,2));
+  float l = sqrt(pow(GxState.value,2)+pow(GyState.value,2)+pow(GzState.value,2));
   float theta = l*dt;
-  float v[3] = {Gx/l, Gy/l, Gz/l};
+  float v[3] = {GxState.value/l, GyState.value/l, GzState.value/l};
   Quaternion q (v, theta);
   Quaternion qf = qk.multiplyBy(q);
   qk = qf;
@@ -133,14 +177,22 @@ void getIMU()
   Gx = (gx * 250.0f / 32768.0f)*(pi/180);
   Gy = (gy * 250.0f / 32768.0f)*(pi/180);
   Gz = (gz * 250.0f / 32768.0f)*(pi/180);
- 
-  kalman_update(&state,Gx);
-  kalman_update(&state,Gy);
-  kalman_update(&state,Gz);
 
   Mx = mx * 10.0f * 1229.0f / 4096.0f + 18.0f;
   My = my * 10.0f * 1229.0f / 4096.0f + 18.0f;
   Mz = mz * 10.0f * 1229.0f / 4096.0f + 18.0f;
+  
+  kalman_update(&AxState,Ax);
+  kalman_update(&AyState,Ay);
+  kalman_update(&AzState,Az);
+  
+  kalman_update(&GxState,Gx);
+  kalman_update(&GyState,Gy);
+  kalman_update(&GzState,Gz);
+  
+  kalman_update(&MxState,Mx);
+  kalman_update(&MyState,My);
+  kalman_update(&MzState,Mz);
 }
 
 
@@ -148,6 +200,7 @@ void getAlt()
 {
   double P = getPressure();
   relativeAlt = pressure.altitude(P,baseline);
+  kalman_update(&altState, relativeAlt);
 }
 
 
