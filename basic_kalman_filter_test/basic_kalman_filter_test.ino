@@ -89,19 +89,23 @@ void loop() {
     Gx = (gx * 250.0f / 32768.0f);
     Gy = (gy * 250.0f / 32768.0f);
     Gz = (gz * 250.0f / 32768.0f);
- 
+    
+    float gxTemp = Gx;
+    
     kalman_update(&state,Gx);
     kalman_update(&state,Gy);
     kalman_update(&state,Gz);
+
+    long t = micros();
 
     // these methods (and a few others) are also available
     //accelgyro.getAcceleration(&ax, &ay, &az);
     //accelgyro.getRotation(&gx, &gy, &gz);
 
     // display tab-separated accel/gyro x/y/z values
-    Serial.print("Gx: ");Serial.print(Gx);Serial.print("\t");
-    Serial.print("Gy: ");Serial.print(Gy);Serial.print("\t");
-    Serial.print("Gz: ");Serial.print(Gz);Serial.print("\t");
+    Serial.print(t);Serial.print("\t");Serial.print(Gx);Serial.print("\t");Serial.print(gxTemp);
+    //Serial.print("Gy: ");Serial.print(Gy);Serial.print("\t");
+    //Serial.print("Gz: ");Serial.print(Gz);Serial.print("\t");
     Serial.println();
 
     // blink LED to indicate activity
