@@ -26,12 +26,12 @@ bool blinkState = false;
 struct kalman_state {
   double q; //process noise covariance
   double r; //measurement noise covariance
-  double x; //value
+  double value; //value
   double p; //estimation error covariance
   double k; //kalman gain
 };
 
-struct kalman_state state;
+struct kalman_state GxState;
 
 struct kalman_state kalman_init(double q, double r, double p, double intial_value)
 {
@@ -39,7 +39,7 @@ struct kalman_state kalman_init(double q, double r, double p, double intial_valu
   result.q = q;
   result.r = r;
   result.p = p;
-  result.x = intial_value;
+  result.value = intial_value;
 
   return result;
 }
@@ -47,12 +47,12 @@ struct kalman_state kalman_init(double q, double r, double p, double intial_valu
 void kalman_update(struct kalman_state* state, double measurement)
 {
   //prediction update
-  //omit x = x
+  //omit value = value
   state->p = state->p + state->q;
 
   //measurement update
   state->k = state->p / (state->p + state->r);
-  state->x = state->x + state->k * (measurement - state->x);
+  state->value = state->value + state->k * (measurement - state->value);
   state->p = (1 - state->k) * state->p;
 }
 
@@ -79,7 +79,7 @@ void setup() {
     
     // initialize the kalman state
     Serial.println("Creating kalman state");
-    state = kalman_init(1, 1, 1, 0);
+    GxState = kalman_init(1, 1, 1, 0);
 }
 
 void loop() {
@@ -90,11 +90,7 @@ void loop() {
     Gy = (gy * 250.0f / 32768.0f);
     Gz = (gz * 250.0f / 32768.0f);
     
-    float gxTemp = Gx;
-    
-    kalman_update(&state,Gx);
-    kalman_update(&state,Gy);
-    kalman_update(&state,Gz);
+    kalman_update(&GxState,Gx);
 
     long t = micros();
 
@@ -103,7 +99,7 @@ void loop() {
     //accelgyro.getRotation(&gx, &gy, &gz);
 
     // display tab-separated accel/gyro x/y/z values
-    Serial.print(t);Serial.print("\t");Serial.print(Gx);Serial.print("\t");Serial.print(gxTemp);
+    Serial.print(t);Serial.print("\t");Serial.print(Gx);Serial.print("\t");Serial.print(GxState.value);
     //Serial.print("Gy: ");Serial.print(Gy);Serial.print("\t");
     //Serial.print("Gz: ");Serial.print(Gz);Serial.print("\t");
     Serial.println();
