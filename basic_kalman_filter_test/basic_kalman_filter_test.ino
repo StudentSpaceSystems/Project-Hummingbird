@@ -1,21 +1,16 @@
-// Arduino Wire library is required if I2Cdev I2CDEV_ARDUINO_WIRE implementation
-// is used in I2Cdev.h
 #include "Wire.h"
-
-// I2Cdev and MPU6050 must be installed as libraries, or else the .cpp/.h files
-// for both classes must be in the include path of your project
 #include "I2Cdev.h"
 #include "MPU6050.h"
 
-// class default I2C address is 0x68
-// specific I2C addresses may be passed as a parameter here
-// AD0 low = 0x68 (default for InvenSense evaluation board)
-// AD0 high = 0x69
 MPU6050 accelgyro;
 
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 int16_t mx, my, mz;
+
+float GxOffset = 0.264666051;
+float GyOffset = 0.883565366;
+float GzOffset = -0.820515335;
 
 float Gx,Gy,Gz;
 
@@ -32,6 +27,8 @@ struct kalman_state {
 };
 
 struct kalman_state GxState;
+struct kalman_state GyState;
+struct kalman_state GzState;
 
 struct kalman_state kalman_init(double q, double r, double p, double intial_value)
 {
@@ -79,11 +76,12 @@ void setup() {
     
     // initialize the kalman state
     Serial.println("Creating kalman state");
-    GxState = kalman_init(1, 1, 1, 0);
+    GxState = kalman_init(0.1, 4, 1, 0);
+    GyState = kalman_init(0.1, 4, 1, 0);
+    GzState = kalman_init(0.1, 4, 1, 0);
 }
 
 void loop() {
-    // read raw accel/gyro measurements from device
     accelgyro.getMotion9(&ax, &ay, &az, &gx, &gy, &gz, &mx, &my, &mz);
     
     Gx = (gx * 250.0f / 32768.0f);
@@ -91,17 +89,15 @@ void loop() {
     Gz = (gz * 250.0f / 32768.0f);
     
     kalman_update(&GxState,Gx);
+    kalman_update(&GyState,Gy);
+    kalman_update(&GzState,Gz);
 
     long t = micros();
 
-    // these methods (and a few others) are also available
-    //accelgyro.getAcceleration(&ax, &ay, &az);
-    //accelgyro.getRotation(&gx, &gy, &gz);
-
-    // display tab-separated accel/gyro x/y/z values
-    Serial.print(t);Serial.print("\t");Serial.print(Gx);Serial.print("\t");Serial.print(GxState.value);
-    //Serial.print("Gy: ");Serial.print(Gy);Serial.print("\t");
-    //Serial.print("Gz: ");Serial.print(Gz);Serial.print("\t");
+    Serial.print("Gx: ");Serial.print(GxState.value + GxOffset);Serial.print("\t");
+    Serial.print("Gy: ");Serial.print(GyState.value + GyOffset);Serial.print("\t");
+    Serial.print("Gz: ");Serial.print(GzState.value + GzOffset);Serial.print("\t");
+    
     Serial.println();
 
     // blink LED to indicate activity
