@@ -37,10 +37,10 @@ float Quaternion::getTheta()
 	return theta;
 }
 
-/*float[3] Quaternion::getv()
+float* Quaternion::getv()
 {
-	return v{i,j,k};
-}*/
+	return v;
+}
 
 float Quaternion::geti()
 {

@@ -11,7 +11,7 @@ class Quaternion
 		Quaternion();
 		~Quaternion();
 		float getTheta();
-		//float[] getv();
+		float* getv();
 		float geti();
 		float getj();
 		float getk();
@@ -30,6 +30,7 @@ class Quaternion
 		float i;
 		float j;
 		float k;
+		float v[3];
 };
 
 #endif

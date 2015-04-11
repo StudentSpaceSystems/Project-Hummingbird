@@ -7,12 +7,11 @@ const float pi = 3.14159265358979323846264338327950;
 //IMU Init
 #include "MPU6050.h"
 MPU6050 accelgyro;
-float Ax, Ay, Az;
-float Gx, Gy, Gz;
-float Mx, My, Mz;
+float Ax,Ay,Az;
+float Gx,Gy,Gz;
+float Mx,My,Mz;
 #define LED_PIN 13
 bool blinkState = false;
-float estGx,estGy,estGz;
 
 
 //Baro Init
@@ -29,6 +28,41 @@ Quaternion qk;
 float t0 = 0;
 
 
+//Kalman setup
+struct kalman_state {
+  double q; //process noise covariance
+  double r; //measurement noise covariance
+  double x; //value
+  double p; //estimation error covariance
+  double k; //kalman gain
+};
+
+struct kalman_state state;
+
+struct kalman_state kalman_init(double q, double r, double p, double intial_value)
+{
+  struct kalman_state result;
+  result.q = q;
+  result.r = r;
+  result.p = p;
+  result.x = intial_value;
+
+  return result;
+}
+
+void kalman_update(struct kalman_state* state, double measurement)
+{
+  //prediction update
+  //omit x = x
+  state->p = state->p + state->q;
+
+  //measurement update
+  state->k = state->p / (state->p + state->r);
+  state->x = state->x + state->k * (measurement - state->x);
+  state->p = (1 - state->k) * state->p;
+}
+
+
 void setup() {
   Wire.begin();
   Serial.begin(38400);
@@ -39,9 +73,6 @@ void setup() {
   Serial.println("Testing IMU connections...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
   pinMode(LED_PIN, OUTPUT);
-  estGx = 0;
-  estGy = 0;
-  estGz = 0;
   
   
   float v0[3] = {0,0,1};
@@ -54,6 +85,10 @@ void setup() {
   Serial.print(baseline);
   Serial.println(" mb");
   
+  
+  // initialize the kalman state
+    Serial.println("Creating kalman state");
+    state = kalman_init(1, 1, 1, 0);
 }
 
 void loop() {
@@ -88,6 +123,7 @@ void getIMU()
   int16_t ax, ay, az;
   int16_t gx, gy, gz;
   int16_t mx, my, mz;
+  
   accelgyro.getMotion9(&ax, &ay, &az, &gx, &gy, &gz, &mx, &my, &mz);
   Ax = ax * 2.0f / 32768.0f;
   Ay = ay * 2.0f / 32768.0f;
@@ -97,13 +133,10 @@ void getIMU()
   Gx = (gx * 250.0f / 32768.0f)*(pi/180);
   Gy = (gy * 250.0f / 32768.0f)*(pi/180);
   Gz = (gz * 250.0f / 32768.0f)*(pi/180);
-  
-  Gx = (0.5*Gx)+(0.5*estGx);
-  Gy = (0.5*Gy)+(0.5*estGy);
-  Gz = (0.5*Gz)+(0.5*estGz);
-  estGx = Gx;
-  estGy = Gy;
-  estGz = Gz;
+ 
+  kalman_update(&state,Gx);
+  kalman_update(&state,Gy);
+  kalman_update(&state,Gz);
 
   Mx = mx * 10.0f * 1229.0f / 4096.0f + 18.0f;
   My = my * 10.0f * 1229.0f / 4096.0f + 18.0f;
