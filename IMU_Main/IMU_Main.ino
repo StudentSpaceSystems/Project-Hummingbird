@@ -108,8 +108,8 @@ void setup() {
   axr=ayr=azr=1;
   axp=ayp=azp=1;
   
-  gxq=gyq=gzq=1;
-  gxr=gyr=gzr=1;
+  gxq=gyq=gzq=0.1;
+  gxr=gyr=gzr=4;
   gxp=gyp=gzp=1;
   
   mxq=myq=mzq=1;
