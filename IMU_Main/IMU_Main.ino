@@ -55,6 +55,7 @@ double axq, axr, axp, gxq, gxr, gxp, mxq, mxr, mxp;
 double ayq, ayr, ayp, gyq, gyr, gyp, myq, myr, myp;
 double azq, azr, azp, gzq, gzr, gzp, mzq, mzr, mzp;
 double altq, altr, altp;
+float axoff, ayoff, azoff, gxoff, gyoff, gzoff, mxoff, myoff, mzoff, altoff;
 
 struct kalman_state kalman_init(double q, double r, double p, double intial_value)
 {
@@ -119,6 +120,15 @@ void setup() {
   altr=1;
   altp=1;
   
+  // initialize the offsets for kalman states
+  //gxoff = 0.264666051;
+  //gyoff = 0.883565366;
+  //gzoff = -0.820515335;
+  
+  gxoff = 0;
+  gyoff = 0;
+  gzoff = 0;
+  
   // initialize the kalman states
   Serial.println("Creating kalman states");
   AxState = kalman_init(axq, axr, axp, 0);
@@ -144,17 +154,21 @@ void loop() {
   float dt = t - t0;
   t0 = t;
 
-  float l = sqrt(pow(GxState.value,2)+pow(GyState.value,2)+pow(GzState.value,2));
+  float l = sqrt(pow(GxState.value + gxoff,2)+pow(GyState.value + gyoff,2)+pow(GzState.value + gzoff,2));
   float theta = l*dt;
-  float v[3] = {GxState.value/l, GyState.value/l, GzState.value/l};
+  float v[3] = {(GxState.value + gxoff)/l, (GyState.value + gyoff)/l, (GzState.value + gzoff)/l};
   Quaternion q (v, theta);
   Quaternion qf = qk.multiplyBy(q);
   qk = qf;
   
-  Serial.print(qf.getTheta());Serial.print("\t");
-  Serial.print(qf.geti());Serial.print("\t");
-  Serial.print(qf.getj());Serial.print("\t");
-  Serial.print(qf.getk());Serial.print("\t");
+  Serial.print("Gx:\t"); Serial.print(GxState.value+gxoff); Serial.print("\t");
+  Serial.print("Gy:\t"); Serial.print(GyState.value+gyoff); Serial.print("\t");
+  Serial.print("Gz:\t"); Serial.print(GzState.value+gzoff); Serial.print("\t");
+  
+  Serial.print("Theta:\t"); Serial.print(qf.getTheta());Serial.print("\t");
+  Serial.print("i:\t"); Serial.print(qf.geti());Serial.print("\t");
+  Serial.print("j:\t"); Serial.print(qf.getj());Serial.print("\t");
+  Serial.print("k:\t"); Serial.print(qf.getk());Serial.print("\t");
   Serial.println();
   
   blinkState = !blinkState;
