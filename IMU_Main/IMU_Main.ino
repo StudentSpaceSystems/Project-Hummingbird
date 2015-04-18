@@ -144,6 +144,10 @@ void setup() {
   MzState = kalman_init(azq, azr, azp, 0);
   
   altState = kalman_init(altq, altr, altp, 0);
+  
+  Serial.print("Finding offset -- do not touch\n");
+  findOffset(&gxoff, &gyoff, &gzoff);
+  Serial.print("Offsets found:\t"+String(gxoff)+"\t"+String(gyoff)+"\t"+String(gzoff)+"\n");
 }
 
 void loop() {
@@ -175,9 +179,26 @@ void loop() {
   digitalWrite(LED_PIN, blinkState);
 }
 
+void findOffset(float *gxoffptr, float *gyoffptr, float *gzoffptr)
+{
+  double gxavg=0, gyavg=0, gzavg=0;
+  long numValues = 0;
+  unsigned long start = millis();
+  while (millis() - start <= 10000) {
+    getIMU();
+    gxavg = (gxavg*numValues - GxState.value) / (numValues + 1);
+    gyavg = (gyavg*numValues - GyState.value) / (numValues + 1);
+    gzavg = (gzavg*numValues - GzState.value) / (numValues + 1); 
+  }
+  *gxoffptr = gxavg;
+  *gyoffptr = gyavg;
+  *gzoffptr = gzavg;
+}
 
 void getIMU()
 {
+  float gcutoff = 0.01;
+  
   int16_t ax, ay, az;
   int16_t gx, gy, gz;
   int16_t mx, my, mz;
@@ -195,6 +216,11 @@ void getIMU()
   Mx = mx * 10.0f * 1229.0f / 4096.0f + 18.0f;
   My = my * 10.0f * 1229.0f / 4096.0f + 18.0f;
   Mz = mz * 10.0f * 1229.0f / 4096.0f + 18.0f;
+  
+  // adjust gyro values w/ filter
+  Gx = Gx<gcutoff&&Gx>-gcutoff?0:Gx;
+  Gy = Gy<gcutoff&&Gy>-gcutoff?0:Gy;
+  Gz = Gz<gcutoff&&Gz>-gcutoff?0:Gz;
   
   kalman_update(&AxState,Ax);
   kalman_update(&AyState,Ay);
