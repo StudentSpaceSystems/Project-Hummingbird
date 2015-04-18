@@ -154,7 +154,7 @@ void loop() {
   
   getIMU();
   getAlt();
-  float t = millis()/1000;
+  float t = millis()/1000.0;
   float dt = t - t0;
   t0 = t;
 
