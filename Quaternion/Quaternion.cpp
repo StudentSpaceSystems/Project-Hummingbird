@@ -8,10 +8,10 @@ Quaternion::Quaternion(float a0, float b0, float c0, float d0)
 	c = c0;
 	d = d0;
 	
-	theta = acos(a);
-	i = b/sin(theta);
-	j = c/sin(theta);
-	k = d/sin(theta);
+	theta = 2*acos(a);
+	i = b/sin(theta/2);
+	j = c/sin(theta/2);
+	k = d/sin(theta/2);
 }
 
 Quaternion::Quaternion(float v[3], float theta)
@@ -20,10 +20,10 @@ Quaternion::Quaternion(float v[3], float theta)
 	j = v[1];
 	k = v[2];
 	
-	a = cos(theta);
-	b = i*sin(theta);
-	c = j*sin(theta);
-	d = k*sin(theta);
+	a = cos(theta/2);
+	b = i*sin(theta/2);
+	c = j*sin(theta/2);
+	d = k*sin(theta/2);
 }
 
 Quaternion::Quaternion(){}
