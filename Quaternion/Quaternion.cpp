@@ -76,6 +76,7 @@ float Quaternion::getd()
 {
 	return d;
 }
+
 Quaternion Quaternion::multiplyBy(Quaternion qt)
 {
 	float q0 = a;
@@ -93,4 +94,43 @@ Quaternion Quaternion::multiplyBy(Quaternion qt)
 	float t3 = (r0*q3)+(r1*q2)-(r2*q1)+(r3*q0);
 	
 	return Quaternion(t0, t1, t2, t3);
+}
+
+Quaternion Quaternion::conj()
+{
+	return Quaternion(a,b * -1,c * -1, d * -1);
+}
+
+Quaternion Quaternion::multiplyScalar(float x)
+{
+	return Quaternion(a*x, b*x, c*x, d*x);
+}
+
+float Quaternion::norm()
+{
+	return(sqrt(pow(a,2)+pow(b,2)+pow(c,2)+pow(d,2)));	
+}
+
+Quaternion Quaternion::inverse()
+{
+	Quaternion q = *this;
+	q = q.conj();
+	float m = q.norm();
+	m = 1/pow(m,2);
+	return q.multiplyScalar(m);
+}
+
+Quaternion Quaternion::differenceBetween(Quaternion q1, Quaternion q2)
+{
+	float a1 = q1.geta();
+	float b1 = q1.getb();
+	float c1 = q1.getc();
+	float d1 = q1.getd();
+	float a2 = q2.geta();
+	float b2 = q2.getb();
+	float c2 = q2.getc();
+	float d2 = q2.getd();
+	
+	Quaternion q = Quaternion(a1-a2,b1-b2,c1-c2,d1-d2);
+	return q;
 }

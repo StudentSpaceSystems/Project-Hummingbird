@@ -20,6 +20,11 @@ class Quaternion
 		float getc();
 		float getd();
 		Quaternion multiplyBy(Quaternion qt);
+		Quaternion conj();
+		Quaternion multiplyScalar(float x);
+		float norm();
+		Quaternion inverse();
+		Quaternion differenceBetween(Quaternion q1, Quaternion q2);
 		
 	private:
 		float theta;

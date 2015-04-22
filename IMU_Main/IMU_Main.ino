@@ -165,6 +165,10 @@ void loop() {
   Quaternion qf = qk.multiplyBy(q);
   qk = qf;
   
+  findSolution(qf, dt);
+  
+  
+  /**
   Serial.print("Gx:\t"); Serial.print(GxState.value+gxoff); Serial.print("\t");
   Serial.print("Gy:\t"); Serial.print(GyState.value+gyoff); Serial.print("\t");
   Serial.print("Gz:\t"); Serial.print(GzState.value+gzoff); Serial.print("\t");
@@ -174,9 +178,22 @@ void loop() {
   Serial.print("j:\t"); Serial.print(qf.getj());Serial.print("\t");
   Serial.print("k:\t"); Serial.print(qf.getk());Serial.print("\t");
   Serial.println();
+  **/
   
   blinkState = !blinkState;
   digitalWrite(LED_PIN, blinkState);
+}
+
+void findSolution(Quaternion qf, float dt)
+{
+  float vTarget[] = {1,0,0};
+  Quaternion qTarget = Quaternion(vTarget,0);
+  Quaternion z = Quaternion(0,0,0,0); //blank object
+  Quaternion qDerrivative = (z.differenceBetween(qf, qTarget)).multiplyScalar(1/dt);
+  Quaternion qInv = (qf.multiplyScalar(0.5)).inverse();
+  Quaternion solution = qInv.multiplyBy(qDerrivative);
+  Serial.print(solution.geta());Serial.print(solution.getb());Serial.print(solution.getc());Serial.print(solution.getd());
+  Serial.println();
 }
 
 void findOffset(float *gxoffptr, float *gyoffptr, float *gzoffptr)
