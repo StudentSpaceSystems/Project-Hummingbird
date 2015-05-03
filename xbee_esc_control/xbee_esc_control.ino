@@ -21,20 +21,22 @@ void setup()
   Serial.begin(9600);
   Serial.println("Attemtping to read from Xbee...");
 
-  esc1.attach(9);
-  esc2.attach(10);
+  esc1.attach(13);
+  esc2.attach(12);
   esc3.attach(11);
-  esc4.attach(12);
+  esc4.attach(10);
 }
 
 void loop()
 {
-  if (Serial.available())
-  {
-    //XBee.write(s);
-  }
+  readXBee();
+  
+}
+
+void readXBee()
+{
   if (XBee.available())
-  { // If data comes in from XBee, send it out to serial monitor
+  {
     char c = XBee.read();
     if (c == finish)
     {
@@ -67,7 +69,6 @@ void loop()
       esc4.writeMicroseconds(1000);
     }
 }
-
 
 void executeCommands()
 {
