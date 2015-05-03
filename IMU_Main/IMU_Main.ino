@@ -189,9 +189,9 @@ void findSolution(Quaternion qf, float dt)
   float vTarget[] = {1,0,0};
   Quaternion qTarget = Quaternion(vTarget,0);
   Quaternion z = Quaternion(0,0,0,0); //blank object
-  Quaternion qDerrivative = (z.differenceBetween(qf, qTarget)).multiplyScalar(1/dt);
-  Quaternion qInv = (qf.multiplyScalar(0.5)).inverse();
-  Quaternion solution = qInv.multiplyBy(qDerrivative);
+  Quaternion qDerrivative = (z.differenceBetween(qf, qTarget)).multiplyScalar(1/dt);  // calculate estimated derivative of quaternion
+  Quaternion qInv = qf.inverse();  // calculate inverse of *current* orientation
+  Quaternion solution = (qDerrivative.multiplyScalar(2)).multiplyBy(qInv);  //multiple qDerrivative by 2, then by qInV, yielding matrix of angular velocities
   Serial.print(solution.geta());Serial.print(solution.getb());Serial.print(solution.getc());Serial.print(solution.getd());
   Serial.println();
 }
