@@ -21,7 +21,9 @@ void setup()
   // Set up both ports at 9600 baud. This value is most important
   // for the XBee. Make sure the baud rate matches the config
   // setting of your XBee.
+  detachInterrupt(0);
   XBee.begin(9600);
+  pinMode(13, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -34,6 +36,10 @@ void loop()
   if (XBee.available())
   { // If data comes in from XBee, send it out to serial monitor
     Serial.write(XBee.read());
+    //digitalWrite(13, HIGH);
+    //delay(1000);
+    //digitalWrite(13, LOW);
+    //delay(1000);
   }
 }
 
