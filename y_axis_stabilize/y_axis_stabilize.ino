@@ -188,8 +188,15 @@ void loop() {
 
   fInput = GxState.value + gxoff;
   fPID.Compute();
-  Serial.println(wOutput);
-
+  
+  float orientation[] = {AxState.value,AyState.value,AzState.value};
+  float magnitude = sqrt(pow(orientation[0],2)+pow(orientation[1],2)+pow(orientation[2],2));
+  orientation[0] /= magnitude;
+  orientation[1] /= magnitude;
+  orientation[2] /= magnitude;
+  float psi = acos(orientation[2]);
+  
+  Serial.print(orientation[2]);Serial.print("\t");Serial.println(psi);
   
   if (t - tL > 20)
   {
@@ -237,7 +244,7 @@ void findOffset(float *gxoffptr, float *gyoffptr, float *gzoffptr)
 
 void getIMU()
 {
-  float gcutoff = 0.01;
+  //float gcutoff = 0.01;
 
   int16_t ax, ay, az;
   int16_t gx, gy, gz;
@@ -258,9 +265,9 @@ void getIMU()
   Mz = mz * 10.0f * 1229.0f / 4096.0f + 18.0f;
 
   // adjust gyro values w/ filter
-  Gx = Gx < gcutoff && Gx > -gcutoff ? 0 : Gx;
-  Gy = Gy < gcutoff && Gy > -gcutoff ? 0 : Gy;
-  Gz = Gz < gcutoff && Gz > -gcutoff ? 0 : Gz;
+  //Gx = Gx < gcutoff && Gx > -gcutoff ? 0 : Gx;
+  //Gy = Gy < gcutoff && Gy > -gcutoff ? 0 : Gy;
+  //Gz = Gz < gcutoff && Gz > -gcutoff ? 0 : Gz;
 
   kalman_update(&AxState, Ax);
   kalman_update(&AyState, Ay);
