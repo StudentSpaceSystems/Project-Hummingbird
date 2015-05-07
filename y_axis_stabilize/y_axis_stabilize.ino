@@ -1,23 +1,11 @@
 #include "Wire.h"
 #include "I2Cdev.h"
-#include "Quaternion.h"
 #include <SoftwareSerial.h>
 #include <Servo.h>
 
+#include <PID_v1.h>
+
 const float pi = 3.14159265358979323846264338327950;
-
-//XBee + Motor Stuff
-SoftwareSerial XBee(2, 3); // RX, TX
-
-const byte commandSize = 2;
-char commandBuffer[commandSize * 4 - 1];
-const char delimiter = ',';
-const char start = '<';
-const char finish = '>';
-boolean writing = false;
-int x = 0;
-
-int commands[] = {0, 0, 0, 0};
 
 Servo esc1, esc2, esc3, esc4;
 
@@ -28,20 +16,11 @@ float Ax, Ay, Az;
 float Gx, Gy, Gz;
 float Mx, My, Mz;
 
-
 //Baro Init
 #include "SFE_BMP180.h"
 SFE_BMP180 pressure;
 double baseline;
 double relativeAlt;
-
-
-//Quaternion Init
-// (v, theta) or (a, b, c, d)
-float Ox, Oy, Oz;
-Quaternion qk;
-float t0 = 0;
-
 
 //Kalman setup
 struct kalman_state {
@@ -95,12 +74,15 @@ void kalman_update(struct kalman_state* state, double measurement)
   state->p = (1 - state->k) * state->p;
 }
 
+double fInput, fOutput, fSetpoint;
+double wInput, wOutput, wSetpoint;
+PID fPID (&fInput, &fOutput, &fSetpoint, 1, 3, 1, DIRECT);
+PID wPID (&wInput, &wOutput, &wSetpoint, 1, 1, 1, DIRECT);
 
 void setup() {
   Wire.begin();
   Serial.begin(9600);
 
-  XBee.begin(9600);
   Serial.println("Attemtping to read from Xbee...");
   esc1.attach(13);
   esc2.attach(12);
@@ -115,10 +97,6 @@ void setup() {
   accelgyro.initialize();
   Serial.println("Testing IMU connections...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-
-
-  float v0[3] = {0, 0, 1};
-  qk = Quaternion(v0, 0);
 
   //Baro Setup
   pressure.begin();
@@ -144,11 +122,6 @@ void setup() {
   altr = 1;
   altp = 1;
 
-  // initialize the offsets for kalman states
-  //gxoff = 0.264666051;
-  //gyoff = 0.883565366;
-  //gzoff = -0.820515335;
-
   gxoff = 0;
   gyoff = 0;
   gzoff = 0;
@@ -173,160 +146,75 @@ void setup() {
   findOffset(&gxoff, &gyoff, &gzoff);
   Serial.print("Offsets found:\t" + String(gxoff) + "\t" + String(gyoff) + "\t" + String(gzoff) + "\n");
   delay(5000);
+
+  wSetpoint = 0.00;
+
+  //turn the PID on
+  fPID.SetMode(AUTOMATIC);
+  fPID.SetSampleTime(50);
+  fPID.SetOutputLimits(-100, 100);
+  wPID.SetMode(AUTOMATIC);
+  wPID.SetSampleTime(50);
+  wPID.SetOutputLimits(-100, 100);
 }
 
-float tLast = 0.0;
-float yRot = 0.0;
-int level1 = 20;
-int level3 = 20;
+long tL = 0;
+long t0 = 0;
+float xRot = 0.0;
 
 void loop() {
-  float t = millis() / 1000.0;
-  float dt = t - t0;
-  t0 = t;
-  float dyRot = (GyState.value + gyoff) * dt;
-  yRot += dyRot;
-
-  int increment = 1;
-
   getIMU();
   getAlt();
-  readXBee();
+  digitalWrite(13, HIGH);
 
-  if (t - tLast > 0.05)
+  long t = millis();
+  long dt = t - t0;
+  t0 = t;
+  
+  xRot += (GxState.value + gxoff) * (dt/1000.0);
+  
+  if (xRot > 0.01)
   {
-    tLast = t;
+    fSetpoint = -1;
+  }
+  else if (xRot < -0.01)
+  {
+    fSetpoint = 1; 
+  }
+  else
+  {
+    fSetpoint = 0.00;
+  }
 
-    if (yRot > 0.05)
+  fInput = GxState.value + gxoff;
+  fPID.Compute();
+  Serial.println(wOutput);
+
+  
+  if (t - tL > 20)
+  {
+    tL = t;
+    int base = 1300;
+    int speed2;
+    int speed4;
+    if (fOutput < 0)
     {
-      if (GyState.value + gyoff > 0)
-      {
-        level1 += increment;
-        level3 -= increment;
-      }
+      speed2 = base - 10 * fOutput;
+      speed4 = base;
     }
-     else if (yRot < -0.05)
+    else if (fOutput > 0)
     {
-      if (GyState.value + gyoff < 0)
-      {
-        level3 += increment;
-        level1 -= increment;
-      }
+      speed2 = base;
+      speed4 = base + 10 * fOutput;
     }
     else
     {
-      level1 = 20;
-      level3 = 20;
+      speed2 = base;
+      speed4 = base;
     }
-    
-    if (level1 < 20)
-    {
-      level1 = 20;
-    }
-    if (level1 > 50)
-    {
-      level1 = 50;
-    }
-    if (level3 < 20)
-    {
-      level3 = 20;
-    }
-    if (level3 > 50)
-    {
-      level3 = 50;
-    }
-   
-    esc1.writeMicroseconds(1000 + (level1*10));
-    esc3.writeMicroseconds(1000 + (level3*10));
+    esc2.writeMicroseconds(speed2);
+    esc4.writeMicroseconds(speed4);
   }
- 
-  digitalWrite(13, HIGH);
-
-}
-
-void readXBee()
-{
-  if (XBee.available())
-  {
-    char c = XBee.read();
-    if (c == finish)
-    {
-      writing = false;
-      x = 0;
-      parseBuffer();
-      executeCommands();
-      clearCommands();
-    }
-    if (writing)
-    {
-      if (c != delimiter)
-      {
-        commandBuffer[x] = c;
-        x += 1;
-      }
-    }
-    if (c == start)
-    {
-      writing = true;
-    }
-  }
-  char s = Serial.read();
-  if (s == 'k')
-  {
-    Serial.println('Killing!');
-    esc1.writeMicroseconds(1000);
-    esc2.writeMicroseconds(1000);
-    esc3.writeMicroseconds(1000);
-    esc4.writeMicroseconds(1000);
-  }
-}
-
-void executeCommands()
-{
-  Serial.println();
-  for (int i = 0; i < 4; i += 1)
-  {
-    commands[i] = ((commands[i] / (pow(10, commandSize))) * (1000.0)) + 1000.0;
-    Serial.println(commands[i]);
-  }
-
-  esc1.writeMicroseconds(commands[0]);
-  esc2.writeMicroseconds(commands[1]);
-  esc3.writeMicroseconds(commands[2]);
-  esc4.writeMicroseconds(commands[3]);
-}
-
-void clearCommands()
-{
-  for (int i = 0; i < sizeof(commands); i += 1)
-  {
-    commands[i] = 0;
-  }
-}
-
-void parseBuffer() {
-  for (int motor = 0; motor < 4; motor += 1)
-  {
-    for (int p = 0; p < commandSize; p += 1)
-    {
-      int index = (motor * commandSize) + p;
-      int k = pow(10, 1 - p);
-      int a = commandBuffer[index] - 48;
-      commands[motor] += (a * k);
-    }
-  }
-}
-
-void findSolution(Quaternion qf, float dt)
-{
-  float vTarget[] = {1, 0, 0};
-  Quaternion qTarget = Quaternion(vTarget, 0);
-  Quaternion z = Quaternion(0, 0, 0, 0); //blank object
-  Quaternion qDerrivative = (z.differenceBetween(qf, qTarget)).multiplyScalar(1 / dt);
-  Quaternion qInv = (qf.multiplyScalar(0.5)).inverse();
-  Quaternion solution = qInv.multiplyBy(qDerrivative);
-  Serial.print(solution.geta()); Serial.print(solution.getb()); Serial.print(solution.getc()); Serial.print(solution.getd());
-  Serial.println();
 }
 
 void findOffset(float *gxoffptr, float *gyoffptr, float *gzoffptr)
