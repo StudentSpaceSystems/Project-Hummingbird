@@ -22,9 +22,9 @@ void loop() {
 //First connect your ESC WITHOUT Arming. Then Open Serial and follo Instructions
  
   firstESC.writeMicroseconds(value);
-  //secondESC.writeMicroseconds(value);
-  //thirdESC.writeMicroseconds(value);
-  //fourthESC.writeMicroseconds(value);
+  secondESC.writeMicroseconds(value);
+  thirdESC.writeMicroseconds(value);
+  fourthESC.writeMicroseconds(value);
   
   if(Serial.available()) 
     value = Serial.parseInt();    // Parse an Integer from Serial
