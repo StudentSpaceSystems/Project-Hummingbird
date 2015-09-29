@@ -1,0 +1,9 @@
+Test procedure for TEST 1 of inertial-frame acceleration-based tracking of orientation (rotation about 1-axis)
+
+Start Hummingbird
+Rotation in 1 axis
+Wait
+Rotation in 1 axis (same)
+Wait
+
+Note - What was thought to be the X-axis, thus corresponding laterally with the direction of rotation, seems to be the Y-axis according to data.  Rotation at times moved to a full 90 degrees at times, correlating with apparent peaks in Y-axis.  Thus, test data relating to speed controllers is not useful with regards to responsivity.  However, there are indications of some miscalculation in our PID algorithm as anomalous PID x-output and speed controller signals still appear even though presumably very little X-axis disturbances appeared.
