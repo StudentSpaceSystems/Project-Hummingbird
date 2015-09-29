@@ -10,4 +10,10 @@ Note - What was thought to be the X-axis, thus corresponding laterally with the 
 
 EDIT:
 
-.xlsx/.ods updated due to incorrect graph data ranges.  It appears that Motor Controller 4 (MC4) functions properly to the PID Output Signal while Motor Controller 2 (MC2) does not ().  I am unaware of what the dynamic range of the PID Output Signal is, but from test experience, it seems that these values did not contribute to excessive change in motor speed.  More advanced analysis of relation of PID Signal Output to MC4/MC2/X-acceleration will come later
+.xlsx/.ods updated due to incorrect graph data ranges.  It appears that Motor Controller 4 (MC4) functions properly to the PID Output Signal (POS) while Motor Controller 2 (MC2) does not ().  I am unaware of what the dynamic range of the PID Output Signal is, but from test experience, it seems that these values did not contribute to excessive change in motor speed.  More advanced analysis of relation of PID Signal Output to MC4/MC2/X-acceleration will come later
+
+EDIT:
+
+MC2 appears to be properly responsive and MC4 is improperly handling POS.  Abnormal response in certain sections (MC4 1st half) (MC2 second half) and clipping in all signals (Sheet 3) indicates an overly aggressive PID coefficient set as abnormal offset in baseline MC response.
+
+Z-acceleration does not approach 0 as expected upon full 90 degree rotation (as evident by Y-acceleration).  Suggests that current method of fixing Hummingbird to a single rotation access may be significant in determination of Z-axis stability.  Could by fixed with gyroscopic stabilization.  As PID was responding to the incorrect axis-acceleration, no useful data could be recovered about appropriateness of response.  However, qualitative observation implicates that relatively small acceleration changes in the x-direction causes high levels of clipping in POS (consider altering PID coefficient set)
