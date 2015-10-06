@@ -28,7 +28,7 @@ double relativeAlt;
 
 //PID setup
 double Xsetpoint, Xinput, Xoutput;
-PID Xbalance(&Xinput, &Xoutput, &Xsetpoint, 20,1,2, DIRECT);
+PID Xbalance(&Xinput, &Xoutput, &Xsetpoint, 7,10,3, DIRECT);
 
 //Kalman setup
 struct kalman_state {
@@ -159,7 +159,7 @@ void setup() {
 
   //PID Activation
   Xbalance.SetMode(AUTOMATIC);
-  Xbalance.SetOutputLimits(-1.0,1.0);
+  Xbalance.SetOutputLimits(-0.7,0.7);
 
   delay(5000);
   speed2 = 1300;
@@ -179,7 +179,7 @@ void loop() {
   //Serial.print("Gy:\t"); Serial.print(Gy); Serial.print("\t");
   //Serial.print("Gz:\t"); Serial.print(Gz); Serial.print("\n");
 
-  Xinput = Ax; // CHANGED -- set Ax to 0 minimize horizontal acceleration
+  Xinput = Ay; // CHANGED -- set Ax to 0 minimize horizontal acceleration
   Xsetpoint = 0;
   Xbalance.Compute();
 
@@ -209,12 +209,12 @@ void loop() {
   Serial.print("Ax:\t"); Serial.print(Ax); Serial.print("\t");
   Serial.print("Ay:\t"); Serial.print(Ay); Serial.print("\t");
   Serial.print("Az:\t"); Serial.print(Az); Serial.print("\n");
-  Serial.print("XOutput:\t");Serial.println(Xoutput);
+  Serial.print("XOutput:\t");Serial.println(Xoutput,10);
   Serial.print("Speed2:\t"); Serial.print(speed2); Serial.print("\t");
   Serial.print("Speed4:\t"); Serial.print(speed4); Serial.print("\n");
   Serial.println("");
-  //esc2.writeMicroseconds(speed2);
-  //esc4.writeMicroseconds(speed4);
+  esc2.writeMicroseconds(speed2);
+  esc4.writeMicroseconds(speed4);
 
   //Serial.print("Speed 2:");Serial.print(speed2);Serial.print("\t Speed 4:");Serial.println(speed4);
 

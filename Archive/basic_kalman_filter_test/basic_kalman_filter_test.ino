@@ -13,6 +13,7 @@ float GyOffset = 0.883565366;
 float GzOffset = -0.820515335;
 
 float Gx,Gy,Gz;
+float Ax,Ay,Az;
 
 #define LED_PIN 13
 bool blinkState = false;
@@ -29,6 +30,10 @@ struct kalman_state {
 struct kalman_state GxState;
 struct kalman_state GyState;
 struct kalman_state GzState;
+
+struct kalman_state AxState;
+struct kalman_state AyState;
+struct kalman_state AzState;
 
 struct kalman_state kalman_init(double q, double r, double p, double intial_value)
 {
@@ -79,6 +84,11 @@ void setup() {
     GxState = kalman_init(0.1, 4, 1, 0);
     GyState = kalman_init(0.1, 4, 1, 0);
     GzState = kalman_init(0.1, 4, 1, 0);
+
+    AxState = kalman_init(0.1, 4, 1, 0);
+    AyState = kalman_init(0.1, 4, 1, 0);
+    AzState = kalman_init(0.1, 4, 1, 0);
+
 }
 
 void loop() {
@@ -87,16 +97,24 @@ void loop() {
     Gx = (gx * 250.0f / 32768.0f);
     Gy = (gy * 250.0f / 32768.0f);
     Gz = (gz * 250.0f / 32768.0f);
+
+    Ax = ax * 2.0f / 32768.0f;
+    Ay = ay * 2.0f / 32768.0f;
+    Az = az * 2.0f / 32768.0f;
     
     kalman_update(&GxState,Gx);
     kalman_update(&GyState,Gy);
     kalman_update(&GzState,Gz);
+    
+    kalman_update(&AxState,Ax);
+    kalman_update(&AyState,Ay);
+    kalman_update(&AzState,Az);
 
     long t = micros();
 
-    Serial.print("Gx: ");Serial.print(GxState.value + GxOffset);Serial.print("\t");
-    Serial.print("Gy: ");Serial.print(GyState.value + GyOffset);Serial.print("\t");
-    Serial.print("Gz: ");Serial.print(GzState.value + GzOffset);Serial.print("\t");
+    Serial.print("Ax: ");Serial.print(AxState.value);Serial.print("\t");
+    Serial.print("Ay: ");Serial.print(AyState.value);Serial.print("\t");
+    Serial.print("Az: ");Serial.print(AzState.value);Serial.print("\t");
     
     Serial.println();
 
