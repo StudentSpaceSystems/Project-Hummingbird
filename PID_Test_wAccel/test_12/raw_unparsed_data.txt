@@ -1,0 +1,447 @@
+Ax:	-0.02	Ay:	0.10	Az:	-1.01
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.04	Ay:	0.09	Az:	-1.01
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.06	Ay:	0.12	Az:	-1.01
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.05	Ay:	0.16	Az:	-1.01
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.06	Ay:	0.14	Az:	-1.01
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.06	Ay:	0.05	Az:	-1.00
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.04	Ay:	0.01	Az:	-0.99
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.09	Ay:	0.15	Az:	-1.05
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.02	Ay:	0.15	Az:	-0.94
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.26	Ay:	0.05	Az:	-1.00
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.45	Ay:	0.30	Az:	-1.33
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.27	Ay:	0.37	Az:	-1.55
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.21	Ay:	0.18	Az:	-0.56
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.34	Ay:	-0.30	Az:	-0.46
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.24	Ay:	-0.75	Az:	-0.45
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.05	Ay:	-0.46	Az:	-0.78
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.41	Ay:	0.11	Az:	-0.91
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.08	Ay:	0.34	Az:	-1.32
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.26	Ay:	0.28	Az:	-1.39
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.79	Ay:	0.21	Az:	-0.50
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.21	Ay:	0.04	Az:	-0.94
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.53	Ay:	-0.24	Az:	-0.91
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.29	Ay:	-0.43	Az:	-1.05
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.11	Ay:	-0.18	Az:	-1.34
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.05	Ay:	0.39	Az:	-1.29
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.25	Ay:	0.24	Az:	-0.57
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.05	Ay:	0.38	Az:	-0.79
+XOutput:	-0.6717655181
+Speed2:	1971	Speed4:	1300
+
+Ax:	-0.57	Ay:	0.51	Az:	-1.08
+XOutput:	-0.6717655181
+Speed2:	1971	Speed4:	1300
+
+Ax:	0.41	Ay:	0.13	Az:	-1.72
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.80	Ay:	-0.31	Az:	-0.62
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.24	Ay:	-0.54	Az:	-0.88
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.44	Ay:	-0.36	Az:	-2.11
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.07	Ay:	0.45	Az:	-1.07
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.02	Ay:	0.32	Az:	-1.95
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.24	Ay:	0.43	Az:	-1.62
+XOutput:	-0.0491761589
+Speed2:	1349	Speed4:	1300
+
+Ax:	-0.76	Ay:	0.50	Az:	-1.58
+XOutput:	-0.0491761589
+Speed2:	1349	Speed4:	1300
+
+Ax:	-0.45	Ay:	-0.04	Az:	-0.59
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.42	Ay:	-0.32	Az:	-0.26
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.60	Ay:	-0.31	Az:	-0.55
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.56	Ay:	0.28	Az:	-1.30
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.07	Ay:	0.62	Az:	-1.52
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.08	Ay:	0.56	Az:	-1.16
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.26	Ay:	0.53	Az:	-1.23
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.76	Ay:	0.69	Az:	-1.24
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.59	Ay:	-0.34	Az:	-0.92
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.16	Ay:	-0.49	Az:	-0.32
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.53	Ay:	0.08	Az:	-1.90
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.09	Ay:	0.95	Az:	-1.39
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.58	Ay:	0.83	Az:	-0.89
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.88	Ay:	0.40	Az:	-1.03
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.66	Ay:	0.13	Az:	-1.19
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.33	Ay:	-0.20	Az:	-1.77
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.80	Ay:	-0.51	Az:	-1.89
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.12	Ay:	-0.31	Az:	-1.66
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.45	Ay:	0.25	Az:	-1.77
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.43	Ay:	0.29	Az:	-1.92
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.27	Ay:	0.19	Az:	-1.17
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.61	Ay:	0.16	Az:	-0.68
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.44	Ay:	-0.48	Az:	-0.94
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.17	Ay:	-0.49	Az:	-1.72
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.26	Ay:	0.09	Az:	-0.63
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.43	Ay:	0.45	Az:	-0.64
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.20	Ay:	0.71	Az:	-1.04
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.15	Ay:	0.46	Az:	-1.41
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.45	Ay:	-0.41	Az:	-0.50
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.70	Ay:	-0.90	Az:	-0.26
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.38	Ay:	-0.91	Az:	-0.93
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.24	Ay:	-0.60	Az:	-0.47
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.68	Ay:	0.59	Az:	-1.31
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.40	Ay:	0.60	Az:	-1.81
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.15	Ay:	0.26	Az:	-1.06
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.40	Ay:	0.06	Az:	-0.56
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.04	Ay:	-0.45	Az:	-1.13
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.07	Ay:	-0.41	Az:	-1.00
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.28	Ay:	0.55	Az:	-1.47
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.13	Ay:	0.52	Az:	-1.81
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.54	Ay:	0.27	Az:	-0.66
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.34	Ay:	0.03	Az:	-1.08
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.43	Ay:	-0.80	Az:	-1.22
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.07	Ay:	-0.75	Az:	-2.40
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.17	Ay:	0.79	Az:	-0.88
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.13	Ay:	0.84	Az:	-1.32
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.11	Ay:	0.77	Az:	-1.31
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.29	Ay:	-0.07	Az:	-1.21
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.46	Ay:	-0.43	Az:	-1.67
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.36	Ay:	0.12	Az:	-1.60
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.07	Ay:	-0.19	Az:	-0.69
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.31	Ay:	-0.14	Az:	-0.46
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.23	Ay:	0.61	Az:	-1.01
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.53	Ay:	0.08	Az:	-0.35
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.35	Ay:	-0.41	Az:	-1.26
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.04	Ay:	-0.31	Az:	-1.03
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.51	Ay:	-0.14	Az:	-1.50
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.24	Ay:	0.22	Az:	-1.14
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.21	Ay:	0.57	Az:	-1.34
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.64	Ay:	0.14	Az:	-1.42
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.57	Ay:	-0.76	Az:	-0.51
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.06	Ay:	-0.59	Az:	-1.62
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.31	Ay:	-0.38	Az:	-1.79
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.19	Ay:	0.11	Az:	-0.65
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.33	Ay:	0.67	Az:	-1.56
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.27	Ay:	-0.04	Az:	-0.56
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.29	Ay:	-0.36	Az:	-1.28
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.08	Ay:	-0.20	Az:	-1.41
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.16	Ay:	-0.30	Az:	-1.66
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	-0.20	Ay:	0.18	Az:	-2.26
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.02	Ay:	0.52	Az:	-1.92
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.46	Ay:	-0.22	Az:	-1.00
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.20	Ay:	-0.76	Az:	-1.17
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	0.01	Ay:	-0.39	Az:	-0.93
+XOutput:	0.7000000000
+Speed2:	1300	Speed4:	2000
+
+Ax:	-0.37	Ay:	-0.29	Az:	-0.32
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300
+
+Ax:	0.03	Ay:	-0.04	Az:	-1.13
+XOutput:	-0.7000000000
+Speed2:	2000	Speed4:	1300

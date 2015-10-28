@@ -28,7 +28,7 @@ double relativeAlt;
 
 //PID setup
 double Xsetpoint, Xinput, Xoutput;
-PID Xbalance(&Xinput, &Xoutput, &Xsetpoint, 7,10,3, DIRECT);
+PID Xbalance(&Xinput, &Xoutput, &Xsetpoint, 2, 1, 5, DIRECT);
 
 //Kalman setup
 struct kalman_state {
@@ -86,6 +86,7 @@ void kalman_update(struct kalman_state* state, double measurement)
 void setup() {
   Wire.begin();
   Serial.begin(38400);
+  digitalWrite(LED_PIN, HIGH);
 
 
   //IMU Setup
@@ -161,6 +162,7 @@ void setup() {
   Xbalance.SetMode(AUTOMATIC);
   Xbalance.SetOutputLimits(-0.7,0.7);
 
+  digitalWrite(LED_PIN, LOW);
   delay(5000);
   speed2 = 1300;
   speed4 = 1300;
