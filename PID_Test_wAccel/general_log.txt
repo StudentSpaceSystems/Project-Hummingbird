@@ -1,0 +1,7 @@
+Update -- October 6 2015
+
+Modified parse_output.py to populate template ods file with data and save the new form in a specific directory.  This also rapidly populates graphs making it easier for analysis.  Functionality may be extended to xlsx formats as well but until necessary, this will not be attempted.  Analysis to arrive at later time, but modified testing may be required to glean more useful insight into Humminbird behavior.  Furthermore, log.txt now added to each test-data-directory to document test-specific information.
+
+Update -- November 2 2015
+
+Apparent noise due to inability to isolate movement into YZ plane makes it difficult to diagnose PID state accurately.  PID output generally too aggressive - suggest mapping to -150 to 150 (instead of -70 to 70) and then clipping or transforming PID signal via lowpass filter to reduce apparent oversensitvity in controller.  Test 12 shows nearest to smoothed behavior although none desireable.  Suggest standardized test rig using string and a PID-active/inactive setting to test step-input response.  Further suggest taking ArcCos of Y/Z to linearize input signal to hopefully reduce oversensitivity.  To further examine -- appearance of more ideal behavior under Derivative heavy regime.
