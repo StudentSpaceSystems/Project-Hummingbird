@@ -41,9 +41,7 @@ w4.addWidget(label, row=0, col=0)
 w4.addWidget(saveBtn, row=1, col=0)
 w4.addWidget(restoreBtn, row=2, col=0)
 d1.addWidget(w4)
-# Comments added
 state = None
-estate = True
 
 
 def save(*args):
