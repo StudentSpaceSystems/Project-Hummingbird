@@ -1,9 +1,11 @@
-byte* writePacket(byte channel_number, byte num_streams, float data[], byte number_bytes=4, byte sig_flags=0, boolean evil_bit=false)  {
+packet_counter = 0
+
+byte* writePacket(byte channel_number, byte num_streams, float data[], byte sig_flags=0, byte number_bytes=4, boolean evil_bit=false)  {
   /*
    * WARNING -- Insecure implementation; DO NOT USE FOR SECURE SYSTEMS
    * byte* writePacket(byte channel_number, byte num_streams, byte stream_size, float[] data, boolean evil_bit=false)
    * channel_number   -- channel identification number (ranges from 0 to 15)
-   * sig_flag         -- 3-bit general purpose flags (byte-value from 0 to 7 but can be set by bitwise operations)
+   * sig_flag         -- 3-bit general purpose flags (byte-value from 0 to 7 but can be set by bitwise operations) (last bit implement optional packet-counter)
    * number_bytes     -- number of bytes per stream instance (ranges from 1 to 8)
    * float data[]     -- float array of data points to be passed
    * num_streams      -- number of elements in data[] dimension must be between 1 and 16
@@ -28,6 +30,7 @@ byte* writePacket(byte channel_number, byte num_streams, float data[], byte numb
   }
   *(byte_stream + packet_length-1) = end_transmission_block;
   Serial.write(byte_stream, packet_length);
+  packet_counter = (packet_counter + 1) % 2
 }
 
 
@@ -37,7 +40,7 @@ void setup() {
   float test_data[] = {1.0, -9.5, 2.3};
   byte channel = 0;
   byte streams = 3;
-  writePacket(channel, streams, test_data);
+  writePacket(channel, streams, test_data, packet_counter);
 }
 
 void loop() {
