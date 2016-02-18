@@ -44,9 +44,8 @@ d1.addWidget(w4)
 state = None
 
 
-def save(*args):
+def save():
     global state
-    print(args)
     state = area.saveState()
     restoreBtn.setEnabled(True)
 

@@ -27,3 +27,4 @@ window.schedule = pyglet.clock.schedule_interval(update, 1 / 45.0)  # update at 
 pyglet.app.run()
 
 # TODO formula for small-text scaling: 11.0/1366.0 + SCREEN_WIDTH/256.0
+# TODO 38400 baudrate corresponds with ~x-xx ms time to receive next data-set according to rather simplistic calculation
