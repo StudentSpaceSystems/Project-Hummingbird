@@ -27,7 +27,8 @@ byte* writePacket(byte channel_number, byte num_streams, float data[], byte sig_
     *(byte_stream + 3 + i) = *(b+i);
   }
   *(byte_stream + packet_length-1) = end_transmission_block;
-  Serial.write(byte_stream, packet_length);
+  cobsr_encode (byte_stream, packet_length)
+  //Serial.write(byte_stream, packet_length);
 }
 
 
