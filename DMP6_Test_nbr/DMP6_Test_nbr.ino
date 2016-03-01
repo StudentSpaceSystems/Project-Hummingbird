@@ -192,50 +192,49 @@ int baseline = 1400;
 // ================================================================
 
 void loop() {
-    // non-blocking read from serial per-byte manner
-    if (NBR_readFlag and Serial.available()) {
-      char NBR_c;
-      NBR_c = Serial.read();
-      if (NBR_c == 59) {   // Semicolon
-        int NBR_commaIndex = NBR_stringBuffer.indexOf(',');
-        int NBR_secondCommaIndex = NBR_stringBuffer.indexOf(',', NBR_commaIndex+1);
-        NBR_intBuffer[0] = NBR_stringBuffer.substring(0, NBR_commaIndex).toInt();
-        NBR_intBuffer[1] = NBR_stringBuffer.substring(NBR_commaIndex+1, NBR_secondCommaIndex).toInt();
-        NBR_intBuffer[2] = NBR_stringBuffer.substring(NBR_secondCommaIndex+1).toInt();
-        Serial.print(":: ");Serial.print(NBR_intBuffer[0]);Serial.print(" ");Serial.print(NBR_intBuffer[1]);Serial.print(" ");Serial.println(NBR_intBuffer[2]);
-        NBR_stringBuffer = "";
-        NBR_readFlag = false;
-        if (NBR_intBuffer[0] != -1) {
-          Serial.println("Pushing values to motors.");
+    do
+    {
+      // non-blocking read from serial per-byte manner
+      if (NBR_readFlag and Serial.available()) {
+        char NBR_c;
+        NBR_c = Serial.read();
+        if (NBR_c == 59) {   // Semicolon
+          int NBR_commaIndex = NBR_stringBuffer.indexOf(',');
+          int NBR_secondCommaIndex = NBR_stringBuffer.indexOf(',', NBR_commaIndex+1);
+          NBR_intBuffer[0] = NBR_stringBuffer.substring(0, NBR_commaIndex).toInt();
+          NBR_intBuffer[1] = NBR_stringBuffer.substring(NBR_commaIndex+1, NBR_secondCommaIndex).toInt();
+          NBR_intBuffer[2] = NBR_stringBuffer.substring(NBR_secondCommaIndex+1).toInt();
+          Serial.print(":: ");Serial.print(NBR_intBuffer[0]);Serial.print(" ");Serial.print(NBR_intBuffer[1]);Serial.print(" ");Serial.println(NBR_intBuffer[2]);
+          NBR_stringBuffer = "";
+          NBR_readFlag = false;
+          if (NBR_intBuffer[0] != -1) {
+            Serial.println("Pushing values to motors.");
+          }
         }
         else  {
-          NBR_intBuffer[0] = -1;
+          NBR_stringBuffer += NBR_c;
         }
       }
-      else  {
-        NBR_stringBuffer += NBR_c;
+      else if (Serial.available()) {
+        if (Serial.peek() == 33)  {   // Exclamation mark
+          NBR_stringBuffer = "";
+          Serial.read();
+          NBR_readFlag = true;
+        }
+      }
+      // end of non-blocking read-system
+      if (NBR_intBuffer[0] == -1) {
+        firstESC.writeMicroseconds(1000);
+        secondESC.writeMicroseconds(1000);
+        thirdESC.writeMicroseconds(1000);
+        fourthESC.writeMicroseconds(1000);
+        Serial.println("Moving to pause state.");
+      }
+      else if (NBR_intBuffer[0] >= 0) {
+        rollPID.SetTunings(NBR_intBuffer[0], NBR_intBuffer[1], NBR_intBuffer[2]);
       }
     }
-    else if (Serial.available()) {
-      if (Serial.peek() == 33)  {   // Exclamation mark
-        NBR_stringBuffer = "";
-        Serial.read();
-        Serial.println("Grabbed packet header.");
-        NBR_readFlag = true;
-      }
-    }
-    // end of non-blocking read-system
-    if (NBR_intBuffer[0] == -1) {
-      firstESC.writeMicroseconds(1000);
-      secondESC.writeMicroseconds(1000);
-      thirdESC.writeMicroseconds(1000);
-      fourthESC.writeMicroseconds(1000);
-      Serial.println("Moving to pause state.");
-      while (true)  {}
-    }
-    else if (NBR_intBuffer[0] >= 0) {
-      rollPID.SetTunings(NBR_intBuffer[0], NBR_intBuffer[1], NBR_intBuffer[2]);
-    }
+    while (NBR_intBuffer[0] == -1);
     // if programming failed, don't try to do anything
     if (!dmpReady) return;
 
