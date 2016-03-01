@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8c12a47-2129-4b48-84f9-173b32104e64" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../DMP6_Test/DMP6_Test.ino" afterPath="$PROJECT_DIR$/../DMP6_Test/DMP6_Test.ino" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serial_tests/serial_tests.ino" afterPath="$PROJECT_DIR$/serial_tests/serial_tests.ino" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serial_tests/packet.c" afterPath="$PROJECT_DIR$/serial_tests/packet.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serial_tests/packet.h" afterPath="$PROJECT_DIR$/serial_tests/packet.h" />
     </list>
     <ignored path="Realtime-visualization.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,10 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="realtime-vis.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="realtime-vis.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/realtime-vis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="1.2185687">
               <caret line="46" column="9" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
               <folding />
             </state>
@@ -59,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serial_input.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="serial_input.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serial_input.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58027077">
-              <caret line="69" column="17" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -174,7 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -677,7 +679,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1020,7 +1022,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455809920906</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Further code-optimization on Arduino end.  Considering doing &#10;packet-parsing by &#10;grabbing whole packet-sets and re-stitching or seeking SOH and &#10;grabbing header info to process rest of packet.">
+      <created>1455876304711</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1455876304711</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1036,7 +1044,7 @@
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2931404" sideWeight="0.49344262" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30975348" sideWeight="0.49344262" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1081,7 +1089,8 @@
     <MESSAGE value="Testing Commit set" />
     <MESSAGE value="Complete packet-writing routine for Arduino (reporting a &#10;delta-bytecount of 324/22 Program/RAM).  Packet-writing/transmission &#10;routine to be tested later, but suggestions indicate near-native &#10;performance in comparison to byte-by-byte writing.  Header format &#10;documented in file.  Further optimizations most likely possible via &#10;CodeBlocks Arduino -OO flags (research needed).  Routine for packet &#10;processing in development.  Shifted structure to incorporate &#10;multithreading operating on a shared python list to emphasize &#10;non-IO-blocking writing.  Internal cache to writing thread to be &#10;considered in cases of draw-functionality being held up during &#10;critical time-periods.  Warning that this may lead to memory-bloating&#10; if overly sustained -- aversion methods requiring further research." />
     <MESSAGE value="Progress made on multithreading-based approach to push data into &#10;shared structure: dictionary to store channels with list of lists &#10;used to create queue-list hybrid for plotting.  Testing of plotting &#10;module to come after implementation of successful packet-reader." />
-    <option name="LAST_COMMIT_MESSAGE" value="Progress made on multithreading-based approach to push data into &#10;shared structure: dictionary to store channels with list of lists &#10;used to create queue-list hybrid for plotting.  Testing of plotting &#10;module to come after implementation of successful packet-reader." />
+    <MESSAGE value="Further code-optimization on Arduino end.  Considering doing &#10;packet-parsing by &#10;grabbing whole packet-sets and re-stitching or seeking SOH and &#10;grabbing header info to process rest of packet." />
+    <option name="LAST_COMMIT_MESSAGE" value="Further code-optimization on Arduino end.  Considering doing &#10;packet-parsing by &#10;grabbing whole packet-sets and re-stitching or seeking SOH and &#10;grabbing header info to process rest of packet." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1433,14 +1442,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/realtime-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="9" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/string_parse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1451,8 +1452,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/serial_input.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58027077">
-          <caret line="69" column="17" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -1471,6 +1472,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/realtime-vis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2185687">
+          <caret line="46" column="9" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
           <folding />
         </state>
       </provider>

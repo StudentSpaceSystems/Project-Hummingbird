@@ -2,8 +2,10 @@
 #define PACKET_H_
 
 typedef struct {
-   uint8_t * stream;
-   uint16_t length;
+   char * stream;
+   short length;
 } byte_array;
+
+byte_array ArrayFloatToByte(float * data, short length);
 
 #endif
