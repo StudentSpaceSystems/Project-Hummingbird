@@ -29,7 +29,7 @@ Servo firstESC, secondESC, thirdESC, fourthESC;
 
 //Non-blocking reader variables
 boolean NBR_readFlag = false;
-int NBR_intBuffer[3] = {-1,-1,-1};
+int NBR_intBuffer[3] = {0,0,0};
 String NBR_stringBuffer = "";
 
 //
@@ -192,7 +192,6 @@ int baseline = 1400;
 // ================================================================
 
 void loop() {
-    Serial.println("1");
     // non-blocking read from serial per-byte manner
     if (NBR_readFlag and Serial.available()) {
       char NBR_c;
@@ -207,7 +206,7 @@ void loop() {
         NBR_stringBuffer = "";
         NBR_readFlag = false;
         if (NBR_intBuffer[0] != -1) {
-          Serial.print("Pushing values to motors.");
+          Serial.println("Pushing values to motors.");
         }
         else  {
           NBR_intBuffer[0] = -1;
@@ -221,11 +220,12 @@ void loop() {
       if (Serial.peek() == 33)  {   // Exclamation mark
         NBR_stringBuffer = "";
         Serial.read();
+        Serial.println("Grabbed packet header.");
         NBR_readFlag = true;
       }
     }
     // end of non-blocking read-system
-    if (NBR_intBuffer[0] == 0 && NBR_intBuffer[1] == 0 && NBR_intBuffer[2] == 0) {
+    if (NBR_intBuffer[0] == -1) {
       firstESC.writeMicroseconds(1000);
       secondESC.writeMicroseconds(1000);
       thirdESC.writeMicroseconds(1000);
@@ -241,12 +241,12 @@ void loop() {
 
     // wait for MPU interrupt or extra packet(s) available
 
-     //PID Calculate
+    //PID Calculate
     rollInput = ypr[2];
     rollPID.Compute();
-    Serial.print(ypr[2] * 180/M_PI);
-    Serial.print("\t");
-    Serial.println(rollOutput);
+    //Serial.print(ypr[2] * 180/M_PI);
+    //Serial.print("\t");
+    //Serial.println(rollOutput);
 
     speed2 = baseline - (int)rollOutput*10/2;
     speed4 = baseline + (int)rollOutput*10/2;
